@@ -1,48 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar } from "../../components/Layout";
+import { MovieCard } from "../../components/MovieCard";
+import { getMovies } from "../../services";
+
+interface Movie {
+	title: string;
+	poster_path: string;
+}
+
 export const Home = () => {
-	const [query, setQuery] = useState();
-	const [movies, setMovies] = useState([]);
-
-	const handleOnChange = (e) => {
-		setQuery(e.target.value);
-	};
-
-	const getData = async () => {
-		const API_KEY = "f6cb23dde2cb05ebc7da6c3cb4a7fa0d";
-		const URL_BASE = "https://api.themoviedb.org/3/search/movie";
-		try {
-			const response = await fetch(
-				`${URL_BASE}?query=${query}&api_key=${API_KEY}`
-			);
-			const data = await response.json();
-			console.log(data.results);
-			setMovies(data.results);
-		} catch (error) {
-			console.log(error);
-			// }
-		}
-	};
-
+	const [movies, setMovies] = useState<Movie[]>([]);
+	useEffect(() => {
+		const fetchMovies = async () => {
+			try {
+				const movieData = await getMovies(
+					"https://api.themoviedb.org/3/movie/popular"
+				);
+				setMovies(movieData.results);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchMovies();
+	}, []);
 	return (
 		<>
 			<Navbar />
-			<div className='p-4'>
-				<form className='flex  gap-2' onSubmit={(e) => e.preventDefault()}>
-					<input
-						className='border-solid border-black p-2'
-						type='text'
-						placeholder='Search your movie'
-						onChange={handleOnChange}
-					/>
-					<button
-						className=' bg-cyan-600 text-white p-2 rounded-md'
-						type='submit'
-						onClick={getData}>
-						Search
-					</button>
-				</form>
-			</div>
+			<main className=' w-10/12 flex flex-wrap m-4 gap-3 justify-center  mx-auto max-w-5xl'>
+				{movies &&
+					movies.map((movie) => (
+						<MovieCard title={movie.title} poster_path={movie.poster_path} />
+					))}
+			</main>
 		</>
 	);
 };

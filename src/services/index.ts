@@ -1,1 +1,1 @@
-export * from './api/FetchData';
+export * from "./api/apiMovie";

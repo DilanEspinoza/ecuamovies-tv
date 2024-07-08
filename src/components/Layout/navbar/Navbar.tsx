@@ -1,5 +1,6 @@
 import logo from "../../../assets/logo.png";
 import SearchIcon from "../../icons/SearchIcon";
+
 export const Navbar = () => {
 	return (
 		<>

@@ -35,5 +35,18 @@ export const useFetch = async (query) => {
 	} catch (error) {
 		console.log(error);
 	}
-};
+};https://api.themoviedb.org/3/movie/popular?api_key=YOUR_API_KEY
  */
+
+export const getMovies = async (url: string) => {
+	const API_KEY = "f6cb23dde2cb05ebc7da6c3cb4a7fa0d";
+
+	try {
+		const response = await fetch(`${url}?api_key=${API_KEY}`);
+		const data = await response.json();
+		// const movies = await data.results;
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
+};
