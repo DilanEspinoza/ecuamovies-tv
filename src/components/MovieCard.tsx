@@ -1,16 +1,23 @@
-import styles from "./styles/MovieCard.module.css";
-
-function MovieCard({ movie }) {
-	const posterBaseUrl = "https://image.tmdb.org/t/p/w500";
+const MovieCard = ({ movies }) => {
 	return (
-		<article className={styles.article}>
-			{/* <h2 className={styles.h2}>{movie.title}</h2> */}
-			<img
-				className={styles.img}
-				src={`${posterBaseUrl}${movie.poster_path}`}
-				alt={movie.overview}
-			/>
-		</article>
+		<div className='flex flex-wrap m-4 '>
+			{movies &&
+				movies.map((movie) => {
+					return (
+						<article
+							key={movie.id + "-container-movie"}
+							className='flex flex-col'>
+							<p key={movie.id + "-title"}>{movie.title}</p>
+							<img
+								key={movie.id + "-img"}
+								src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+								alt={movie.title}
+								className='w-52'
+							/>
+						</article>
+					);
+				})}
+		</div>
 	);
-}
+};
 export default MovieCard;
