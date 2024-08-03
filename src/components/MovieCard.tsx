@@ -5,7 +5,7 @@ interface Movie {
 
 export const MovieCard = ({ title, poster_path }: Movie) => {
 	return (
-		<article className=' flex justify-center items-center flex-col p-2 text-balance text-center overflow-hidden max-w-xs '>
+		<article className=' flex justify-start items-center flex-col p-2 text-balance text-center overflow-hidden max-w-xs '>
 			<img
 				src={`https://image.tmdb.org/t/p/w500${poster_path}`}
 				alt={title}
